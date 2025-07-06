@@ -18,14 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $msg = "<p style='color:red; text-align:center;'>🚫 Email already exists or pending approval.</p>";
   } else {
 
-/////...
-//     if ($role == 'admin') {
-//   $stmt = $conn->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'admin')");
-//   $stmt->bind_param("sss", $name, $email, $password);
-//   $stmt->execute();
-//     }
-
-
     if ($role == "doctor") {
       $stmt = $conn->prepare("INSERT INTO pending_doctors (name, email, password, specialization) VALUES (?, ?, ?, ?)");
       $stmt->bind_param("ssss", $name, $email, $password, $specialization);
@@ -34,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
       $stmt = $conn->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
       $stmt->bind_param("ssss", $name, $email, $password, $role);
-    //   $stmt->execute();
+       $stmt->execute();
       $msg = "<p style='color:green; text-align:center;'>🎉 Registered successfully! Redirecting to login...</p>";
       header("refresh:3;url=login.php");
     }
